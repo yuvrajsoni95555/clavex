@@ -25,7 +25,7 @@ try {
   run("git add -A", { cwd: dir });
   run(`git -c user.name="CLAVEX deploy" -c user.email="deploy@clavex.invalid" commit -q -m "Deploy ${sha}"`, { cwd: dir });
   run(`git push -q -f ${remote} gh-pages`, { cwd: dir });
-  console.log(`\nPublished ${sha}. Live in about a minute at ${SITE_URL}/`);
+  console.log(`\nPublished ${sha}. Live in about a minute at ${SITE_URL}${BASE_PATH}/`);
 } finally {
   rmSync(dir, { recursive: true, force: true });
 }
