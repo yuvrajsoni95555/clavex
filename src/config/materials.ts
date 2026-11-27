@@ -22,8 +22,8 @@ export type StoneKey = keyof typeof STONES;
 export const RING = {
   /** claws, gallery and halo seat: "match" the band's metal, or a fixed metal such as "white" (white-gold claws) */
   prongMetal: "match" as MetalKey | "match",
-  /** a hidden halo of small diamonds under the centre stone */
-  halo: true,
-  /** a row of small diamonds set into each shoulder of the band */
-  pave: true,
+  /** a hidden halo of small diamonds under the centre stone (off: a single solitaire, no other stones) */
+  halo: false,
+  /** a row of small diamonds set into each shoulder of the band (off: a single solitaire, no other stones) */
+  pave: false,
 };

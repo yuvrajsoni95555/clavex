@@ -107,15 +107,16 @@ export function Hero() {
         />
 
         <div ref={wordmark} className="pointer-events-none absolute inset-x-0 bottom-[5svh] flex justify-center">
+          {/* select-none: a long-press must never paint the logo with the gold text-selection colour */}
           <RevealText
             as="h1"
             text="CLAVEX"
             delay={0.4}
-            className="font-serif text-[24vw] font-light leading-[0.8] tracking-[0.05em] text-ivory/90 md:text-[17vw]"
+            className="select-none font-serif text-[24vw] font-light leading-[0.8] tracking-[0.05em] text-ivory/90 md:text-[17vw]"
           />
         </div>
 
-        <div ref={canvasFade} aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div ref={canvasFade} aria-hidden="true" className="pointer-events-none absolute inset-0 select-none">
           {/* poster: a still of the ring where the 3D one will appear. It is the page's LCP image, shown
               until the canvas is ready, and stays as the fallback without WebGL. Swap in a real photo anytime. */}
           <div
