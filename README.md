@@ -18,7 +18,7 @@ npm run deploy   # build for GitHub Pages and publish it (see below)
 
 `npm run deploy` (`scripts/deploy-pages.mjs`) builds the site and pushes the result to the `gh-pages` branch, which GitHub Pages serves; it is live about a minute later. Pushing to `main` alone does not update the live site. The site is a static export (`output: "export"` in `next.config.ts`), so it needs no server. Because GitHub serves it under `/clavex`, the deploy script sets `NEXT_PUBLIC_BASE_PATH=/clavex`; files from `public/` used in `next/image` or the 3D loader go through `asset()` in `src/lib/asset.ts` to get that prefix.
 
-**Custom domain** (e.g. `clavex.com`): repo → Settings → Pages → Custom domain, point the domain's DNS at GitHub, then in `scripts/deploy-pages.mjs` set `BASE_PATH` to `""` and `SITE_URL` to the new domain.
+**Custom domain** (e.g. `clavex.com`): repo → Settings → Pages → Custom domain, point the domain's DNS at GitHub, then in `scripts/deploy-pages.mjs` set `BASE_PATH` to `""` and `SITE_URL` to the new domain (origin only, e.g. `https://clavex.com`).
 
 ## Where to change things
 

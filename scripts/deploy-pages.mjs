@@ -9,7 +9,8 @@ const run = (cmd, opts = {}) => execSync(cmd, { stdio: "inherit", ...opts });
 
 // the repo name is the sub-path GitHub serves the site under
 const BASE_PATH = "/clavex";
-const SITE_URL = "https://yuvrajsoni95555.github.io/clavex";
+// origin only: asset paths already carry BASE_PATH, and Next appends them to this URL as-is
+const SITE_URL = "https://yuvrajsoni95555.github.io";
 
 run("npx next build", { env: { ...process.env, NEXT_PUBLIC_BASE_PATH: BASE_PATH, NEXT_PUBLIC_SITE_URL: SITE_URL } });
 writeFileSync("out/.nojekyll", ""); // otherwise GitHub's Jekyll step drops the _next folder
