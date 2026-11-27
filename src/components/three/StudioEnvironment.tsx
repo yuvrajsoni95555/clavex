@@ -35,7 +35,8 @@ function gemStudio() {
     const a = (i / 12) * Math.PI * 2;
     panels.push({ size: [1.6, 7], at: [Math.cos(a) * 6, 0.5, Math.sin(a) * 6], power: i % 2 ? 0.05 : 3.2 }); // flags: near-black, not void
   }
-  panels.push({ size: [2, 2], at: [3, 4, 4], power: 9, tint: [1, 0.97, 0.92] }); // key light: the brightest sparks
+  panels.push({ size: [2, 2], at: [3, 4, 4], power: 14, tint: [1, 0.97, 0.92] }); // key light: the brightest sparks
+  panels.push({ size: [1.2, 1.2], at: [-4, 3, 3], power: 10 }); // second, smaller source: more scintillation as it turns
   panels.push({ size: [12, 12], at: [0, -5, 0], power: 0.15 }); // dim floor
   return { panels, background: new THREE.Color(0.2, 0.2, 0.21) }; // dark grey: the panels carry the light, the gaps give contrast
 }

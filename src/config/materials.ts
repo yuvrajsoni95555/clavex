@@ -10,8 +10,8 @@ export type MetalKey = keyof typeof METALS;
 
 export const STONES = {
   // aberration is the rainbow "fire": keep it small, real diamonds show sparks, not stripes
-  diamond: { label: "Diamond", color: "#ffffff", ior: 2.42, aberration: 0.01 },
-  labgrown: { label: "Lab-Grown", color: "#fbfdff", ior: 2.42, aberration: 0.01 },
+  diamond: { label: "Diamond", color: "#ffffff", ior: 2.42, aberration: 0.014 },
+  labgrown: { label: "Lab-Grown", color: "#fbfdff", ior: 2.42, aberration: 0.014 },
   emerald: { label: "Emerald", color: "#46c487", ior: 1.58, aberration: 0.004 },
   sapphire: { label: "Sapphire", color: "#4f72f2", ior: 1.77, aberration: 0.006 },
 } as const;
