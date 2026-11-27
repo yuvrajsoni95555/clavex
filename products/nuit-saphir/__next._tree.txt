@@ -1,0 +1,8 @@
+:HL["/clavex/_next/static/chunks/2wii_de-vpgco.css","style"]
+:HL["/clavex/_next/static/media/7d36468766f8dbd9-s.p.02bgiaqdf54e5.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/clavex/_next/static/media/82450a180bcad83c-s.p.0p-wng2nn8o-p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/clavex/_next/static/media/cd189481cfa8ef03-s.p.29k5lr3-zi515.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+3:[["children",{"s":"__PAGE__","h":160}]]
+2:[["children",{"s":{"n":"slug","t":"d","k":"nuit-saphir","s":[]},"h":96,"c":"$Q3"}]]
+1:[["children",{"s":"products","h":96,"c":"$Q2"}]]
+0:{"b":"LQLunxb6N3luG5xZhApqM","t":{"t":{"s":"","h":80,"c":"$Q1"}}}

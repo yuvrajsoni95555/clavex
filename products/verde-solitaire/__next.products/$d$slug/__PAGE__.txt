@@ -1,0 +1,50 @@
+1:"$Sreact.fragment"
+3:"/clavex/_next/static/chunks/1ua2kfq9s-me6.js"
+4:"/clavex/_next/static/chunks/18_l914-76344.js"
+5:"/clavex/_next/static/chunks/3lr14wn8vj6hp.js"
+6:"/clavex/_next/static/chunks/3spj44d321nmp.js"
+7:I[66029,["$3","$4","$5","$6"],"SmoothScroll"]
+8:I[74960,["$3","$4","$5","$6"],"Preloader"]
+9:I[35988,["$3","$4","$5","$6"],"CustomCursor"]
+a:I[64022,["$3","$4","$5","$6"],"PageTransition"]
+b:I[69478,["$3","$4","$5","$6"],"TransitionLink"]
+c:I[39756,["$3","$4","$5","$6"],"default"]
+d:I[37457,["$3","$4","$5","$6"],"default"]
+e:I[53005,["$3","$4","$5","$6"],"MagneticButton"]
+:HL["/clavex/_next/static/chunks/2wii_de-vpgco.css","style"]
+2:["$","style",null,{"children":"#clx-preloader{display:none}[data-reveal] .clx-part{transform:none!important}[data-reveal-img]{clip-path:none!important}"}]
+12:X
+16:X
+16:C
+1a:[["children",{"s":"__PAGE__","h":160,"d":{"r":"$L1b","p":"$@1c","v":null,"s":"$12"}}]]
+17:[["children",{"s":{"n":"slug","t":"d","k":"verde-solitaire","s":[]},"h":96,"d":{"r":"$L18","p":"$@19","v":"$16","s":"$12"},"c":"$Q1a"}]]
+13:[["children",{"s":"products","h":96,"d":{"r":"$L14","p":"$@15","v":"$16","s":"$12"},"c":"$Q17"}]]
+0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/clavex/_next/static/chunks/2wii_de-vpgco.css","precedence":"next"}],["$","script","script-0",{"src":"/clavex/_next/static/chunks/1ua2kfq9s-me6.js","async":true}],["$","script","script-1",{"src":"/clavex/_next/static/chunks/18_l914-76344.js","async":true}],["$","script","script-2",{"src":"/clavex/_next/static/chunks/3lr14wn8vj6hp.js","async":true}],["$","script","script-3",{"src":"/clavex/_next/static/chunks/3spj44d321nmp.js","async":true}]],["$","html",null,{"lang":"en","className":"u7lKtW_variable _1ltb7q_variable","style":{"--clx-ink":"#0B0B0B","--clx-ivory":"#F5F1E8","--clx-gold":"#C9A96E","--clx-goldSoft":"#E3CFA4","--clx-stone":"#8A847A","--clx-line":"#2A2724"},"children":["$","body",null,{"className":"min-h-screen","children":[["$","noscript",null,{"children":"$2"}],["$","$L7",null,{}],["$","$L8",null,{}],["$","$L9",null,{}],["$","$La",null,{}],["$","a",null,{"href":"#main","className":"sr-only z-[100] bg-gold px-4 py-2 text-xs uppercase tracking-[0.3em] text-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4","children":"Skip to content"}],["$","header",null,{"className":"fixed inset-x-0 top-0 z-50 flex items-center justify-between px-6 py-6 mix-blend-difference md:px-12","children":[["$","$Lb",null,{"href":"/","className":"select-none font-serif text-lg font-light tracking-[0.25em] text-ivory md:text-xl md:tracking-[0.35em]","children":"CLAVEX"}],["$","nav",null,{"aria-label":"Main","className":"flex gap-4 text-xs uppercase tracking-[0.18em] text-ivory/70 md:gap-10 md:tracking-[0.3em]","children":[["$","$Lb","/collections",{"href":"/collections","className":"transition-colors duration-500 hover:text-ivory ","children":"Collections"}],["$","$Lb","/#craft",{"href":"/#craft","className":"transition-colors duration-500 hover:text-ivory ","children":"Craft"}],["$","$Lb","#contact",{"href":"#contact","className":"transition-colors duration-500 hover:text-ivory hidden md:inline","children":"Contact"}]]}]]}],["$","$Lc",null,{"parallelRouterKey":"children","template":["$","$Ld",null,{}],"notFound":[["$","main",null,{"id":"main","className":"flex min-h-svh flex-col items-center justify-center px-6 text-center","children":[["$","p",null,{"className":"text-xs uppercase tracking-[0.5em] text-gold","children":"404"}],["$","h1",null,{"className":"mt-6 font-serif text-5xl font-light md:text-7xl","children":"This piece isn’t here"}],["$","p",null,{"className":"mt-6 max-w-sm text-ivory/70","children":"The page may have moved, or the piece is no longer in the collection."}],["$","$Lb",null,{"href":"/collections","className":"mt-10 border-b border-gold/60 pb-2 text-xs uppercase tracking-[0.35em] text-gold","children":"Browse the collection"}]]}],[]]}],["$","footer",null,{"id":"contact","className":"relative overflow-hidden border-t border-line px-6 pt-24 md:px-12","children":[["$","div",null,{"className":"grid gap-12 md:grid-cols-[2fr_1fr_1fr]","children":[["$","div",null,{"children":[["$","p",null,{"className":"font-serif text-3xl font-light leading-snug md:text-4xl","children":["Visit the atelier,",["$","br",null,{}],"or let us come to you."]}],["$","$Le",null,{"className":"mt-8","children":["$","a",null,{"href":"mailto:hello@clavex.example?subject=Appointment","className":"block border border-gold/70 px-9 py-4 text-xs uppercase tracking-[0.35em] text-gold transition-colors duration-700 hover:bg-gold hover:text-ink","children":"Book an appointment"}]}]]}],["$","nav",null,{"aria-label":"Footer","className":"flex flex-col gap-3 text-sm text-stone","children":[["$","span",null,{"className":"mb-2 text-xs uppercase tracking-[0.3em] text-ivory/60","children":"Maison"}],["$","$Lb",null,{"href":"/collections","className":"transition-colors hover:text-ivory","children":"Collections"}],["$","$Lb",null,{"href":"/#craft","className":"transition-colors hover:text-ivory","children":"The craft"}]]}],["$","div",null,{"className":"flex flex-col gap-3 text-sm text-stone","children":[["$","span",null,{"className":"mb-2 text-xs uppercase tracking-[0.3em] text-ivory/60","children":"Contact"}],["$","a",null,{"href":"mailto:hello@clavex.example","className":"transition-colors hover:text-ivory","children":"hello@clavex.example"}],"",""]}]]}],"$Lf","$L10"]}]]}]}]]}],"p":"$@11","v":null,"s":"$12"},"c":"$Q13"},"h":{"r":"$L1d","p":"$@1e","v":null,"s":"$12"}},"a":"$@1f","u":"$@20","b":"LQLunxb6N3luG5xZhApqM"}
+21:I[43836,["$3","$4","$5","$6"],"RevealText"]
+22:"$Sreact.suspense"
+23:"/clavex/_next/static/chunks/04vb6a3dbus57.js"
+24:"/clavex/_next/static/chunks/2wdzsgdpz8c15.js"
+25:"ProductExperience"
+26:I[78997,["$3","$4","$5","$6","$23","$24"],"$25"]
+27:I[97367,["$3","$4","$5","$6"],"OutletBoundary"]
+29:"ViewportBoundary"
+2a:I[97367,["$3","$4","$5","$6"],"$29"]
+2b:"MetadataBoundary"
+2c:I[97367,["$3","$4","$5","$6"],"$2b"]
+2d:I[27201,["$3","$4","$5","$6"],"IconMark"]
+f:["$","div",null,{"aria-hidden":"true","children":["$","$L21",null,{"text":"CLAVEX","trigger":"scroll","className":"mt-20 block select-none text-center font-serif text-[22vw] font-light leading-[0.75] tracking-[0.02em] text-ivory/[0.07] md:mt-28"}]}]
+10:["$","p",null,{"className":"flex justify-between border-t border-line py-6 text-xs tracking-[0.2em] text-stone","children":[["$","span",null,{"children":"© CLAVEX"}],["$","span",null,{"children":"Fine jewellery"}]]}]
+14:["$","$1","c",{"children":[null,["$","$Lc",null,{"parallelRouterKey":"children","template":["$","$Ld",null,{}]}]]}]
+18:["$","$1","c",{"children":[null,["$","$Lc",null,{"parallelRouterKey":"children","template":["$","$Ld",null,{}]}]]}]
+1b:["$","$1","c",{"children":[["$","$22",null,{"fallback":["$","main",null,{"className":"min-h-svh"}],"children":["$","$L26",null,{"product":{"slug":"verde-solitaire","name":"Verde Solitaire","category":"engagement","metal":"yellow","stone":"emerald","price":138000,"carat":1,"description":"A deep green emerald in yellow gold, for a ring that is entirely yours."}}]}],[["$","script","script-0",{"src":"/clavex/_next/static/chunks/04vb6a3dbus57.js","async":true}],["$","script","script-1",{"src":"/clavex/_next/static/chunks/2wdzsgdpz8c15.js","async":true}]],["$","$L27",null,{"children":["$","$22",null,{"name":"Next.MetadataOutlet","children":"$@28"}]}]]}]
+1d:["$","$1","h",{"children":[null,["$","$L2a",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L2c",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$22",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Verde Solitaire · CLAVEX"}],["$","meta","1",{"name":"description","content":"A deep green emerald in yellow gold, for a ring that is entirely yours."}],["$","link","2",{"rel":"canonical","href":"https://yuvrajsoni95555.github.io/clavex/products/verde-solitaire"}],["$","meta","3",{"property":"og:title","content":"Verde Solitaire"}],["$","meta","4",{"property":"og:description","content":"A deep green emerald in yellow gold, for a ring that is entirely yours."}],["$","meta","5",{"property":"og:site_name","content":"CLAVEX"}],["$","meta","6",{"property":"og:image","content":"https://yuvrajsoni95555.github.io/clavex/products/verde-solitaire.webp"}],["$","meta","7",{"property":"og:image:alt","content":"Verde Solitaire"}],["$","meta","8",{"property":"og:type","content":"website"}],["$","meta","9",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","10",{"name":"twitter:title","content":"Verde Solitaire"}],["$","meta","11",{"name":"twitter:description","content":"A deep green emerald in yellow gold, for a ring that is entirely yours."}],["$","meta","12",{"name":"twitter:image","content":"https://yuvrajsoni95555.github.io/clavex/products/verde-solitaire.webp"}],["$","meta","13",{"name":"twitter:image:alt","content":"Verde Solitaire"}],["$","link","14",{"rel":"icon","href":"/clavex/icon.svg?icon.3b9e84uc0v8in.svg","sizes":"any","type":"image/svg+xml"}],["$","$L2d","15",{}]]}]}],null]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+28:null
+20:true
+12:300
+12:C
+1f:0
+19:"$undefined"
+15:"$undefined"
+1e:"$undefined"
+1c:"$undefined"
+11:"$undefined"
