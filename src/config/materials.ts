@@ -9,10 +9,21 @@ export const METALS = {
 export type MetalKey = keyof typeof METALS;
 
 export const STONES = {
-  diamond: { label: "Diamond", color: "#ffffff", ior: 2.42, aberration: 0.018 },
-  labgrown: { label: "Lab-Grown", color: "#f7fbff", ior: 2.42, aberration: 0.016 },
-  emerald: { label: "Emerald", color: "#3fbf7f", ior: 1.58, aberration: 0.008 },
-  sapphire: { label: "Sapphire", color: "#4a6cf0", ior: 1.77, aberration: 0.01 },
+  // aberration is the rainbow "fire": keep it small, real diamonds show sparks, not stripes
+  diamond: { label: "Diamond", color: "#ffffff", ior: 2.42, aberration: 0.01 },
+  labgrown: { label: "Lab-Grown", color: "#fbfdff", ior: 2.42, aberration: 0.01 },
+  emerald: { label: "Emerald", color: "#46c487", ior: 1.58, aberration: 0.004 },
+  sapphire: { label: "Sapphire", color: "#4f72f2", ior: 1.77, aberration: 0.006 },
 } as const;
 
 export type StoneKey = keyof typeof STONES;
+
+/** The procedural engagement ring's design options. */
+export const RING = {
+  /** claws, gallery and halo seat: "match" the band's metal, or a fixed metal such as "white" (white-gold claws) */
+  prongMetal: "match" as MetalKey | "match",
+  /** a hidden halo of small diamonds under the centre stone */
+  halo: true,
+  /** a row of small diamonds set into each shoulder of the band */
+  pave: true,
+};

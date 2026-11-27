@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { RevealText } from "@/components/motion/RevealText";
 import { CollectionGrid } from "@/components/sections/CollectionGrid";
+import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = {
   title: "Collections",
   description: "Engagement rings and wedding bands in gold and silver, with natural and lab-grown diamonds.",
+  alternates: { canonical: asset("/collections") },
 };
 
 export default function CollectionsPage() {

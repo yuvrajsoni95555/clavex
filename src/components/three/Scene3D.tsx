@@ -1,8 +1,12 @@
 "use client";
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { Canvas, type CanvasProps } from "@react-three/fiber";
 import { PerformanceMonitor } from "@react-three/drei";
 import { StudioEnvironment } from "./StudioEnvironment";
+
+/** true once the device has proved too slow: the stone switches to its cheaper fallback material */
+const LowQuality = createContext(false);
+export const useLowQuality = () => useContext(LowQuality);
 
 type Props = Omit<CanvasProps, "children"> & {
   children: React.ReactNode;
@@ -10,13 +14,13 @@ type Props = Omit<CanvasProps, "children"> & {
   active?: boolean;
   /** render only when something changes (reduced motion, idle viewers) */
   onDemand?: boolean;
-  lite?: boolean;
 };
 
-/** Shared canvas setup for every 3D view: transparent, capped pixel ratio, studio lighting. */
-export function Scene3D({ children, active = true, onDemand = false, lite = false, ...rest }: Props) {
-  // start sharp; if the frame rate keeps dropping, render at 1× so the motion stays smooth
-  const [maxDpr, setMaxDpr] = useState(lite ? 1.5 : 2);
+/** Shared canvas setup for every 3D view: transparent, antialiased, pixel ratio 1–2, studio lighting. */
+export function Scene3D({ children, active = true, onDemand = false, ...rest }: Props) {
+  // start sharp; if the frame rate keeps dropping, render at 1×, and if it still can't keep up, cheapen the stone
+  const [maxDpr, setMaxDpr] = useState(2);
+  const [low, setLow] = useState(false);
 
   return (
     <Canvas
@@ -25,8 +29,17 @@ export function Scene3D({ children, active = true, onDemand = false, lite = fals
       gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
       {...rest}
     >
-      <PerformanceMonitor onDecline={() => setMaxDpr(1)} flipflops={2} onFallback={() => setMaxDpr(1)} />
-      <StudioEnvironment>{children}</StudioEnvironment>
+      <PerformanceMonitor
+        flipflops={2}
+        onDecline={() => setMaxDpr(1)}
+        onFallback={() => {
+          setMaxDpr(1);
+          setLow(true);
+        }}
+      />
+      <LowQuality.Provider value={low}>
+        <StudioEnvironment>{children}</StudioEnvironment>
+      </LowQuality.Provider>
     </Canvas>
   );
 }

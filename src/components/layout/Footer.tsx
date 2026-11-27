@@ -1,9 +1,7 @@
 import { RevealText } from "@/components/motion/RevealText";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { MagneticButton } from "@/components/motion/MagneticButton";
-
-// Contact details are placeholders: set the real address before launch.
-const CONTACT_EMAIL = "hello@clavex.example";
+import { SITE } from "@/config/site";
 
 export function Footer() {
   return (
@@ -17,7 +15,7 @@ export function Footer() {
           </p>
           <MagneticButton className="mt-8">
             <a
-              href={`mailto:${CONTACT_EMAIL}?subject=Appointment`}
+              href={`mailto:${SITE.email}?subject=Appointment`}
               className="block border border-gold/70 px-9 py-4 text-xs uppercase tracking-[0.35em] text-gold transition-colors duration-700 hover:bg-gold hover:text-ink"
             >
               Book an appointment
@@ -31,7 +29,15 @@ export function Footer() {
         </nav>
         <div className="flex flex-col gap-3 text-sm text-stone">
           <span className="mb-2 text-xs uppercase tracking-[0.3em] text-ivory/60">Contact</span>
-          <a href={`mailto:${CONTACT_EMAIL}`} className="transition-colors hover:text-ivory">{CONTACT_EMAIL}</a>
+          <a href={`mailto:${SITE.email}`} className="transition-colors hover:text-ivory">{SITE.email}</a>
+          {SITE.phone && (
+            <a href={`tel:${SITE.phone.replace(/[^+\d]/g, "")}`} className="transition-colors hover:text-ivory">{SITE.phone}</a>
+          )}
+          {SITE.whatsapp && (
+            <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-ivory">
+              WhatsApp
+            </a>
+          )}
         </div>
       </div>
 
@@ -40,7 +46,7 @@ export function Footer() {
         <RevealText
           text="CLAVEX"
           trigger="scroll"
-          className="mt-20 block select-none text-center font-serif text-[27vw] font-light leading-[0.75] tracking-[0.02em] text-ivory/[0.07] md:mt-28"
+          className="mt-20 block select-none text-center font-serif text-[22vw] font-light leading-[0.75] tracking-[0.02em] text-ivory/[0.07] md:mt-28"
         />
       </div>
       <p className="flex justify-between border-t border-line py-6 text-xs tracking-[0.2em] text-stone">

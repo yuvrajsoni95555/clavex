@@ -10,6 +10,9 @@ import { TransitionLink } from "@/components/motion/TransitionLink";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { products } from "@/data/products";
 import { asset } from "@/lib/asset";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = { alternates: { canonical: asset("/") } };
 
 const featured = ["aurelia-solitaire", "rose-lumiere", "nuit-saphir"].map((s) => products.find((p) => p.slug === s)!);
 

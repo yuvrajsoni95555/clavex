@@ -9,11 +9,10 @@ import { heroState } from "@/components/three/heroState";
 import type { ViewerApi } from "@/components/three/ProductViewer";
 import { RevealText } from "@/components/motion/RevealText";
 import { MagneticButton } from "@/components/motion/MagneticButton";
+import { SITE } from "@/config/site";
 
 const ProductViewer = dynamic(() => import("@/components/three/ProductViewer"), { ssr: false });
 
-// Placeholder: set the real enquiry address before launch (also in Footer.tsx).
-const CONTACT_EMAIL = "hello@clavex.example";
 
 type Device = { lite: boolean; reduced: boolean; touch: boolean };
 
@@ -24,6 +23,7 @@ export function ProductExperience({ product }: { product: Product }) {
   const [device, setDevice] = useState<Device | null>(null); // null until 3D may load
   const [canTap3d, setCanTap3d] = useState<Device | null>(null); // phones: 3D waits for this button
   const [ready, setReady] = useState(false);
+  const [interacted, setInteracted] = useState(false); // the hint fades once the visitor has found the controls
   const api = useRef<ViewerApi | null>(null);
 
   useEffect(() => {
@@ -47,6 +47,7 @@ export function ProductExperience({ product }: { product: Product }) {
     };
     if (!actions[e.key]) return;
     e.preventDefault();
+    setInteracted(true);
     actions[e.key]();
   };
 
@@ -67,6 +68,7 @@ export function ProductExperience({ product }: { product: Product }) {
           role="group"
           tabIndex={device ? 0 : -1}
           onKeyDown={onKey}
+          onPointerDown={() => ready && setInteracted(true)}
           aria-label={`3D view of the ${product.name} in ${summary}. Arrow keys turn it, plus and minus zoom.`}
           className="relative aspect-[4/5] overflow-hidden bg-[radial-gradient(ellipse_at_50%_40%,#1d1a15,#0e0d0b_70%)] md:aspect-square"
         >
@@ -102,35 +104,41 @@ export function ProductExperience({ product }: { product: Product }) {
               View in 3D
             </button>
           )}
-          {device && !ready && canTap3d && (
-            <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs uppercase tracking-[0.3em] text-stone">Loading 3D…</p>
-          )}
-          {device && ready && (
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between p-4 md:p-6">
-              <p className="text-xs uppercase tracking-[0.3em] text-stone">
-                Drag to turn · {device.touch ? "pinch" : "⌘/Ctrl + scroll"} to zoom
-              </p>
-              <div className="pointer-events-auto flex gap-2">
-                {(
-                  [
-                    ["Zoom in", "+", 0.85],
-                    ["Zoom out", "−", 1.18],
-                  ] as const
-                ).map(([label, glyph, factor]) => (
-                  <button
-                    key={label}
-                    type="button"
-                    aria-label={label}
-                    onClick={() => api.current?.zoom(factor)}
-                    className="flex h-9 w-9 items-center justify-center border border-line text-ivory/80 transition-colors hover:border-gold hover:text-gold"
-                  >
-                    {glyph}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
+
+        {/* controls sit under the frame, never over the ring */}
+        {device && (
+          <div className="flex min-h-11 items-center justify-between gap-4">
+            <p
+              aria-live="polite"
+              className={`min-w-0 truncate text-xs uppercase tracking-[0.12em] text-stone transition-opacity duration-700 md:tracking-[0.25em] ${ready && interacted ? "opacity-0" : "opacity-100"}`}
+            >
+              {ready ? `Drag to turn · ${device.touch ? "Pinch" : "⌘/Ctrl + scroll"} to zoom` : "Loading 3D…"}
+            </p>
+            <div className="flex shrink-0 gap-2">
+              {(
+                [
+                  ["Zoom in", "+", 0.85],
+                  ["Zoom out", "−", 1.18],
+                ] as const
+              ).map(([label, glyph, factor]) => (
+                <button
+                  key={label}
+                  type="button"
+                  aria-label={label}
+                  disabled={!ready}
+                  onClick={() => {
+                    setInteracted(true);
+                    api.current?.zoom(factor);
+                  }}
+                  className="flex h-11 w-11 items-center justify-center border border-gold/50 text-lg font-light text-gold transition-colors duration-500 hover:border-gold hover:bg-gold hover:text-ink disabled:opacity-40"
+                >
+                  {glyph}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="relative aspect-[4/5] bg-[radial-gradient(ellipse_at_50%_40%,#1d1a15,#0e0d0b_70%)] md:aspect-square">
           <Image src={productImage(product, "detail")} alt={`${product.name}, detail`} fill sizes="(min-width: 768px) 55vw, 100vw" className="object-cover" />
@@ -196,7 +204,7 @@ export function ProductExperience({ product }: { product: Product }) {
 
         <MagneticButton className="mt-10">
           <a
-            href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Enquiry: ${product.name} (${summary})`)}`}
+            href={`mailto:${SITE.email}?subject=${encodeURIComponent(`Enquiry: ${product.name} (${summary})`)}`}
             className="block border border-gold/70 px-9 py-4 text-xs uppercase tracking-[0.35em] text-gold transition-colors duration-700 hover:bg-gold hover:text-ink"
           >
             Enquire about this piece

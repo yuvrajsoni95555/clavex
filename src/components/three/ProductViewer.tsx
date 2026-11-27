@@ -1,7 +1,7 @@
 "use client";
 import { Suspense, useEffect, useRef, type RefObject } from "react";
 import { useThree } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Bounds, ContactShadows, OrbitControls } from "@react-three/drei";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import * as THREE from "three";
 import type { MetalKey, StoneKey } from "@/config/materials";
@@ -29,20 +29,29 @@ type Props = {
   onReady: () => void;
 };
 
-const TARGET = new THREE.Vector3(0, 0.5, 0); // between band centre and stone, so zooming keeps both in frame
-const MIN_DIST = 3.6;
-const MAX_DIST = 9;
+// distance limits in ring units (every model is scaled to ~2.65 tall): close enough for the claws, never inside the band
+const MIN_DIST = 3.2;
+const MAX_DIST = 14;
+// the opening view: three-quarters from the front and a little above, like a product photograph
+const START = new THREE.Vector3(Math.sin(0.6) * Math.cos(0.38), Math.sin(0.38), Math.cos(0.6) * Math.cos(0.38)).multiplyScalar(9);
 const IDLE_MS = 2500; // auto-rotate resumes this long after the visitor lets go
 
 export default function ProductViewer({ metal, stone, model, lite, reduced, touch, apiRef, onReady }: Props) {
   return (
-    <Scene3D lite={lite} onDemand={reduced} camera={{ position: [2.6, 1.6, 6.6], fov: 30 }} onCreated={() => onReady()}>
+    <Scene3D onDemand={reduced} camera={{ position: START.toArray(), fov: 30 }} onCreated={() => onReady()}>
       <Controls reduced={reduced} touch={touch} apiRef={apiRef} />
       <SweepLight />
+      {/* soft key from above-front, so the band reads as rounded and the claws catch light */}
+      <directionalLight position={[2, 4, 3]} intensity={1.2} color="#fff6ea" />
       <Suspense fallback={null}>
-        <JewelleryModel src={model} metal={metal} stone={stone ?? "diamond"} setting={!!stone} lite={lite} />
+        {/* fits the whole ring in frame with padding for any screen shape, and again on resize */}
+        <Bounds fit clip observe margin={1.08} maxDuration={0}>
+          <JewelleryModel src={model} metal={metal} stone={stone ?? "diamond"} setting={!!stone} lite={lite} />
+          {stone && !model && <GemGlow /> /* glow is placed for the procedural stone */}
+        </Bounds>
       </Suspense>
-      {stone && !model && <GemGlow /> /* glow is placed for the procedural stone */}
+      {/* the camera orbits, the ring stays still: the shadow keeps re-rendering only so a late-loading .glb gets one too */}
+      {!lite && <ContactShadows position={[0, -1.16, 0]} opacity={0.6} scale={4.5} blur={2.4} far={1.4} resolution={512} color="#000" />}
     </Scene3D>
   );
 }
@@ -105,7 +114,7 @@ function Controls({ reduced, touch, apiRef }: Pick<Props, "reduced" | "touch" | 
   return (
     <OrbitControls
       ref={controls}
-      target={TARGET}
+      makeDefault
       enablePan={false}
       enableZoom={touch}
       enableDamping
@@ -113,8 +122,8 @@ function Controls({ reduced, touch, apiRef }: Pick<Props, "reduced" | "touch" | 
       rotateSpeed={0.6}
       minDistance={MIN_DIST}
       maxDistance={MAX_DIST}
-      minPolarAngle={0.25}
-      maxPolarAngle={Math.PI - 0.6}
+      minPolarAngle={0.3}
+      maxPolarAngle={Math.PI / 2 + 0.12} // a touch below the horizon at most: never under the ring
       autoRotate={!reduced}
       autoRotateSpeed={0.8}
       onStart={pause}

@@ -18,7 +18,6 @@ export default function HeroScene({ active, lite, reduced, onReady }: Props) {
     <Scene3D
       active={active}
       onDemand={reduced}
-      lite={lite}
       camera={{ position: [0, 0.6, 9.6], fov: 30 }}
       onCreated={() => onReady()}
     >

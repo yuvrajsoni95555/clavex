@@ -1,10 +1,24 @@
 "use client";
-import { useMemo, type Ref } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, type Ref } from "react";
 import { Center, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { asset } from "@/lib/asset";
 import { MetalMaterial, type MetalKey } from "./MetalMaterial";
-import { DiamondMaterial, type StoneKey } from "./DiamondMaterial";
+import { DiamondMaterial, StoneSparkleMaterial, type StoneKey } from "./DiamondMaterial";
+import { GemGlints } from "./Effects";
+import { brilliantCut } from "./gemGeometry";
+import {
+  bandGeometry,
+  GIRDLE_Y,
+  HALO_SEAT,
+  haloMatrices,
+  headGeometry,
+  paveMatrices,
+  settingClearance,
+  STONE_R,
+  TABLE_Y,
+} from "./ringGeometry";
+import { RING } from "@/config/materials";
 
 type Props = {
   metal?: MetalKey;
@@ -18,11 +32,10 @@ type Props = {
   setting?: boolean;
 };
 
-/** Height of the procedural gem's table above the ring centre; ScrollStory and the hero aim at it. */
-export const GEM_Y = 1.42;
-const GEM_SCALE = 0.34;
+/** Height of the procedural stone's table above the ring centre; the hero and the story aim at it. */
+export const GEM_Y = TABLE_Y;
 /** largest dimension of the procedural ring (its height); imported models are scaled to match */
-const FIT_SIZE = 2.62;
+const FIT_SIZE = 2.65;
 
 export function JewelleryModel({ src, ...rest }: Props) {
   return src ? <GltfJewellery src={src} {...rest} /> : <ProceduralSolitaire {...rest} />;
@@ -62,7 +75,7 @@ function GltfJewellery({ src, metal, stone, lite }: Props & { src: string }) {
 
   return (
     // the procedural ring's bounding box is centred slightly above the band centre; match it
-    <group position={[0, 0.22, 0]} scale={fit}>
+    <group position={[0, 0.24, 0]} scale={fit}>
       <Center>
         {meshes.map((m) => (
           <mesh key={m.key} geometry={m.geometry} matrix={m.matrix} matrixAutoUpdate={false}>
@@ -74,78 +87,64 @@ function GltfJewellery({ src, metal, stone, lite }: Props & { src: string }) {
   );
 }
 
-/* ---------- procedural placeholder ---------- */
+/* ---------- procedural engagement ring ---------- */
 
-/** Round brilliant silhouette spun on a lathe; 16 sides + flat normals read as facets. Girdle radius 1, table up. */
-function brilliantGeometry() {
-  const profile = [
-    [0.0001, -0.86], // culet
-    [0.52, -0.47], // pavilion break
-    [1, -0.02], // girdle
-    [1, 0.02],
-    [0.82, 0.2], // crown
-    [0.56, 0.32], // table edge
-    [0.0001, 0.32], // table centre
-  ].map(([x, y]) => new THREE.Vector2(x, y));
-  const g = new THREE.LatheGeometry(profile, 16).toNonIndexed();
-  g.computeVertexNormals();
-  // a trivial index keeps the facets but stops drei warning when it calls toNonIndexed() again for its BVH
-  g.setIndex([...Array(g.attributes.position.count).keys()]);
-  return g;
+function AccentStones({ matrices }: { matrices: THREE.Matrix4[] }) {
+  const ref = useRef<THREE.InstancedMesh>(null);
+  const geometry = useMemo(() => brilliantCut().geometry, []);
+  useLayoutEffect(() => {
+    matrices.forEach((m, i) => ref.current!.setMatrixAt(i, m));
+    ref.current!.instanceMatrix.needsUpdate = true;
+  }, [matrices]);
+  return (
+    <instancedMesh ref={ref} args={[geometry, undefined, matrices.length]}>
+      <StoneSparkleMaterial />
+    </instancedMesh>
+  );
 }
 
-/** Six claws from the basket up to the crown, as {position, quaternion, length}. */
-function prongs(count = 6) {
-  const up = new THREE.Vector3(0, 1, 0);
-  return Array.from({ length: count }, (_, i) => {
-    const a = (i / count) * Math.PI * 2 + Math.PI / count;
-    const base = new THREE.Vector3(Math.cos(a) * 0.16, 1.1, Math.sin(a) * 0.16);
-    const tip = new THREE.Vector3(Math.cos(a) * 0.31, GEM_Y - 0.05, Math.sin(a) * 0.31); // just over the crown
-    const dir = tip.clone().sub(base);
-    return {
-      position: base.clone().add(tip).multiplyScalar(0.5),
-      quaternion: new THREE.Quaternion().setFromUnitVectors(up, dir.clone().normalize()),
-      length: dir.length(),
-      tip,
-    };
-  });
-}
+function ProceduralSolitaire({ metal = "yellow", stone, lite, gemRef, setting = true }: Omit<Props, "src">) {
+  const band = useMemo(() => bandGeometry(), []);
+  const head = useMemo(() => headGeometry(), []);
+  const gem = useMemo(() => brilliantCut().geometry, []);
+  const halo = useMemo(() => (RING.halo ? haloMatrices() : []), []);
+  const pave = useMemo(() => (RING.pave ? paveMatrices() : []), []);
+  const headMetal = RING.prongMetal === "match" ? metal : RING.prongMetal;
+  // a contrasting white-metal head reflects the bright gem studio; a matching head must look exactly like the band
 
-function ProceduralSolitaire({ metal, stone, lite, gemRef, setting = true }: Omit<Props, "src">) {
-  const gem = useMemo(() => brilliantGeometry(), []);
-  const claws = useMemo(() => prongs(), []);
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production") return;
+    const { violations, checked } = settingClearance();
+    if (violations) console.warn(`[clavex] ring setting: ${violations} of ${checked} metal points sit inside the centre stone`);
+  }, []);
 
   return (
     <group>
-      {/* band: a torus squashed along its axis so the shank is wider than it is thick */}
-      <mesh scale={[1, 1, 1.9]}>
-        <torusGeometry args={[1, 0.085, 48, 160]} />
-        <MetalMaterial metal={metal} />
+      <mesh geometry={band}>
+        <MetalMaterial metal={metal} attach="material-0" />
+        <MetalMaterial metal={metal} attach="material-1" satin />
       </mesh>
       {setting && (
         <>
-          {/* basket ring under the stone */}
-          <mesh position={[0, 1.2, 0]} rotation-x={Math.PI / 2}>
-            <torusGeometry args={[0.22, 0.022, 16, 48]} />
-            <MetalMaterial metal={metal} />
+          <mesh geometry={head}>
+            <MetalMaterial metal={headMetal} bright={headMetal !== metal} />
           </mesh>
-          {claws.map((c, i) => (
-            <group key={i}>
-              <mesh position={c.position} quaternion={c.quaternion}>
-                <cylinderGeometry args={[0.02, 0.026, c.length, 12]} />
-                <MetalMaterial metal={metal} />
+          {halo.length > 0 && (
+            <>
+              <mesh position={[0, HALO_SEAT.y, 0]} rotation-x={Math.PI / 2}>
+                <torusGeometry args={[HALO_SEAT.r, HALO_SEAT.tube, 12, 96]} />
+                <MetalMaterial metal={headMetal} bright={headMetal !== metal} />
               </mesh>
-              <mesh position={c.tip}>
-                <sphereGeometry args={[0.028, 12, 12]} />
-                <MetalMaterial metal={metal} />
-              </mesh>
-            </group>
-          ))}
+              <AccentStones matrices={halo} />
+            </>
+          )}
+          {pave.length > 0 && <AccentStones matrices={pave} />}
           {/* the group sits at the stone's resting spot, so lifting it is just moving the group up */}
           <group ref={gemRef}>
-            <mesh geometry={gem} position={[0, GEM_Y - 0.32 * GEM_SCALE, 0]} scale={GEM_SCALE}>
+            <mesh geometry={gem} position={[0, GIRDLE_Y, 0]} scale={STONE_R}>
               <DiamondMaterial stone={stone} lite={lite} />
             </mesh>
+            <GemGlints />
           </group>
         </>
       )}

@@ -28,7 +28,7 @@ function sample(progress: number) {
 /** Pinned craftsmanship story: the ring turns, the camera moves in, the stone lifts off and settles. */
 export default function StoryScene({ active, lite, onReady }: Props) {
   return (
-    <Scene3D active={active} lite={lite} camera={{ position: story[0].camera, fov: 30 }} onCreated={() => onReady()}>
+    <Scene3D active={active} camera={{ position: story[0].camera, fov: 30 }} onCreated={() => onReady()}>
       <StoryRig lite={lite} />
       <SweepLight />
     </Scene3D>
@@ -47,14 +47,13 @@ function StoryRig({ lite }: { lite: boolean }) {
     const ease = (from: number, to: number) => damp(from, to, k, delta);
 
     // poses are framed for a wide screen beside the copy; on portrait, centre the piece,
-    // step back so it fits the narrow frame, and lift it into the top half above the copy
-    const portrait = size.width / size.height < 0.8;
+    // and step back so it fits the narrow frame
+    const portrait = size.width / size.height < 1; // phones: the canvas is the top half of the screen
     lookAt.set(lerp(a.look[0], b.look[0], t), lerp(a.look[1], b.look[1], t), lerp(a.look[2], b.look[2], t));
     target.set(lerp(a.camera[0], b.camera[0], t), lerp(a.camera[1], b.camera[1], t), lerp(a.camera[2], b.camera[2], t));
     if (portrait) {
-      target.sub(lookAt).multiplyScalar(1.8).add(lookAt);
+      target.sub(lookAt).multiplyScalar(1.45).add(lookAt);
       lookAt.x = 0;
-      lookAt.y -= 0.9;
     }
     camera.position.set(ease(camera.position.x, target.x), ease(camera.position.y, target.y), ease(camera.position.z, target.z));
     look.current.set(ease(look.current.x, lookAt.x), ease(look.current.y, lookAt.y), ease(look.current.z, lookAt.z));

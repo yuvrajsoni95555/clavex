@@ -72,7 +72,7 @@ export function ScrollStory() {
     <section ref={section} id="craft" aria-label="The craft" style={{ height: `${story.length * 110 + 40}svh` }} className="relative">
       <div className="sticky top-0 h-svh overflow-hidden">
         {/* poster glow, then the 3D piece: full screen on phones, right side on desktop */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 md:left-[34%]">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 bottom-[44%] [mask-image:linear-gradient(to_bottom,black_75%,transparent)] md:bottom-0 md:left-[34%] md:[mask-image:none]">
           <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_50%_45%,rgba(201,169,110,0.1),transparent_70%)]" />
           <div className={`absolute inset-0 transition-opacity duration-[1500ms] ${ready ? "opacity-100" : "opacity-0"}`}>
             {lite !== null && <StoryScene active={active} lite={lite} onReady={() => setReady(true)} />}
@@ -80,7 +80,7 @@ export function ScrollStory() {
         </div>
 
         {/* soft fade so the copy stays readable where it sits over the ring on phones */}
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink via-ink/80 to-transparent md:hidden" />
+        {/* phones: the piece sits in the top half, the copy below it, so text never runs over the ring */}
 
         <div className="absolute inset-x-0 bottom-[8svh] px-6 md:inset-y-0 md:bottom-auto md:left-0 md:flex md:w-[38%] md:flex-col md:justify-center md:pl-12 md:pr-0 md:pt-20">
           <p className="mb-6 text-xs uppercase tracking-[0.5em] text-gold md:mb-10">The craft</p>

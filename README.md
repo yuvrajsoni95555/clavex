@@ -28,10 +28,11 @@ npm run deploy   # build for GitHub Pages and publish it (see below)
 | Fonts | `src/app/layout.tsx` (Cormorant Garamond 300 + Manrope) |
 | Motion feel: durations, easing, smooth-scroll weight, cursor, magnetic pull, preloader timing | `src/config/motion.ts` |
 | Metal and stone looks (colour, roughness, refraction) | `src/config/materials.ts` |
+| Ring design: claws in the band's metal or white gold, hidden halo, pavé | `RING` in `src/config/materials.ts` |
+| Contact email, phone, WhatsApp (TODO: real details) | `src/config/site.ts` |
 | Products, prices, descriptions, 3D model per product | `src/data/products.ts` |
 | Product photos | `public/products/<slug>.webp` and `<slug>-detail.webp` |
 | The four "craft" chapters: copy and camera poses | `src/config/story.ts` |
-| Contact email (placeholder `hello@clavex.example`) | `src/components/layout/Footer.tsx`, `src/components/sections/ProductExperience.tsx` |
 | Homepage numbers (placeholders) | `src/app/page.tsx` |
 
 Copy, prices, figures and product photos are placeholders. The photos are renders of the procedural ring; replace them with real photography under the same file names.
@@ -67,3 +68,14 @@ public/
 ## Adding your own jewellery models
 
 See [docs/MODELS.md](docs/MODELS.md). In short: export a `.glb` with the stone meshes named `gem`/`diamond`/`stone`, run it through `gltf-transform optimize`, put it in `public/models/`, and set `model: "/models/<file>.glb"` on the product in `src/data/products.ts`. Étoile Blanche already uses `public/models/sample-solitaire.glb` as a working example.
+
+## Checks
+
+```bash
+npx tsx scripts/check-ring.mts                          # diamond has 57 facets; no claw, rail or accent stone inside the centre stone
+node scripts/qa-shots.mjs http://localhost:3000 latest  # screenshots of every section (mobile 390x844, desktop 1440x900),
+                                                        # console/network errors and an internal-link check, in qa-screenshots/latest
+```
+
+The procedural ring (`src/components/three/ringGeometry.ts`, `gemGeometry.ts`): a 57-facet round brilliant (57% table, 34.5° crown, 40.8° pavilion), six tapered claws that rise outside the pavilion, touch the girdle and bend over the crown edge, two gallery rails, shoulders, a tapered comfort-fit band, a hidden halo and shoulder pavé. In development the console warns if any metal enters the stone.
+

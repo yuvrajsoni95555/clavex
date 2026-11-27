@@ -8,6 +8,8 @@ import { CustomCursor } from "@/components/motion/CustomCursor";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { SITE } from "@/config/site";
+import { asset } from "@/lib/asset";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -28,8 +30,15 @@ export const metadata: Metadata = {
     default: "CLAVEX — Fine Jewellery",
     template: "%s · CLAVEX",
   },
-  description:
-    "CLAVEX fine jewellery: handcrafted gold and silver, certified diamonds and lab-grown brilliance.",
+  description: SITE.description,
+  // each page sets its own canonical URL; a canonical here would point every page at the home page
+  openGraph: {
+    type: "website",
+    siteName: SITE.name,
+    locale: "en_IN",
+    images: [{ url: asset("/products/editorial-aurelia.webp"), width: 1600, height: 1000, alt: "CLAVEX solitaire ring, close-up of the setting" }],
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

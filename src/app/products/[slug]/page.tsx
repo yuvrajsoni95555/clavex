@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { getProduct, productImage, products } from "@/data/products";
+import { asset } from "@/lib/asset";
 import { ProductExperience } from "@/components/sections/ProductExperience";
 
 // every product page is built ahead of time
@@ -13,7 +14,13 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const p = getProduct((await params).slug);
-  return p ? { title: p.name, description: p.description, openGraph: { images: [productImage(p)] } } : {};
+  if (!p) return {};
+  return {
+    title: p.name,
+    description: p.description,
+    alternates: { canonical: asset(`/products/${p.slug}`) },
+    openGraph: { type: "website", siteName: "CLAVEX", title: p.name, description: p.description, images: [{ url: productImage(p), alt: p.name }] },
+  };
 }
 
 // params are read inside <Suspense>, so the page also works if Cache Components is switched back on (needs a server host).
