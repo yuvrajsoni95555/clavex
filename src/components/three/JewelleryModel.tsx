@@ -2,6 +2,7 @@
 import { useMemo, type Ref } from "react";
 import { Center, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
+import { asset } from "@/lib/asset";
 import { MetalMaterial, type MetalKey } from "./MetalMaterial";
 import { DiamondMaterial, type StoneKey } from "./DiamondMaterial";
 
@@ -34,7 +35,7 @@ const GEM_NAME = /gem|diamond|stone/i;
 
 // gemRef is ignored here: a .glb stone is baked into the file's transforms
 function GltfJewellery({ src, metal, stone, lite }: Props & { src: string }) {
-  const { scene } = useGLTF(src); // Draco and Meshopt compressed files both load
+  const { scene } = useGLTF(asset(src)); // Draco and Meshopt compressed files both load
   const { meshes, fit } = useMemo(() => {
     scene.updateMatrixWorld(true);
     const list: { geometry: THREE.BufferGeometry; matrix: THREE.Matrix4; gem: boolean; key: string }[] = [];

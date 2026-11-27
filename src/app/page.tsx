@@ -9,6 +9,7 @@ import { MagneticButton } from "@/components/motion/MagneticButton";
 import { TransitionLink } from "@/components/motion/TransitionLink";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { products } from "@/data/products";
+import { asset } from "@/lib/asset";
 
 const featured = ["aurelia-solitaire", "rose-lumiere", "nuit-saphir"].map((s) => products.find((p) => p.slug === s)!);
 
@@ -49,7 +50,7 @@ export default function Home() {
       {/* editorial: each image drifts inside its mask while the copy sits beside it */}
       <section className="grid items-center gap-12 px-6 pb-28 md:grid-cols-[1.4fr_1fr] md:gap-20 md:px-12 md:pb-40">
         <RevealImage
-          src="/products/editorial-aurelia.webp"
+          src={asset("/products/editorial-aurelia.webp")}
           alt="Close-up of the Aurelia Solitaire's six claws holding a round brilliant diamond"
           aspect="16/10"
           parallax
@@ -81,7 +82,7 @@ export default function Home() {
           </p>
         </div>
         <RevealImage
-          src="/products/editorial-rose.webp"
+          src={asset("/products/editorial-rose.webp")}
           alt="A lab-grown brilliant set in rose gold"
           aspect="16/10"
           parallax

@@ -7,11 +7,18 @@ A cinematic storefront built with Next.js (App Router), TypeScript and Tailwind,
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm run build    # production build (all pages are prerendered)
-npm start        # serve the production build
+npm run build    # static site in /out (every page is plain HTML)
+npx serve out    # preview the built site locally
+npm run deploy   # build for GitHub Pages and publish it (see below)
 ```
 
-Deploy on Vercel as a standard Next.js project. Set `NEXT_PUBLIC_SITE_URL` to the live domain so share images get absolute URLs.
+## Live site
+
+**https://yuvrajsoni95555.github.io/clavex/** (GitHub Pages)
+
+`npm run deploy` (`scripts/deploy-pages.mjs`) builds the site and pushes the result to the `gh-pages` branch, which GitHub Pages serves; it is live about a minute later. Pushing to `main` alone does not update the live site. The site is a static export (`output: "export"` in `next.config.ts`), so it needs no server. Because GitHub serves it under `/clavex`, the deploy script sets `NEXT_PUBLIC_BASE_PATH=/clavex`; files from `public/` used in `next/image` or the 3D loader go through `asset()` in `src/lib/asset.ts` to get that prefix.
+
+**Custom domain** (e.g. `clavex.com`): repo → Settings → Pages → Custom domain, point the domain's DNS at GitHub, then in `scripts/deploy-pages.mjs` set `BASE_PATH` to `""` and `SITE_URL` to the new domain.
 
 ## Where to change things
 
@@ -54,7 +61,8 @@ public/
 - **Lighting** comes from a procedural studio of glowing panels (`StudioEnvironment`), so there is no HDR file to download.
 - **Diamonds** use drei's `MeshRefractionMaterial` (ray-traced refraction with chromatic aberration). `DiamondMaterial.tsx` carries a one-line shim for three r187; remove it once drei ships a fix.
 - **Reduced motion:** smooth scroll, auto-rotation, parallax, tilt, magnetic pull, gold dust and text reveals all switch off; the 3D renders only on demand.
-- **Performance** (Lighthouse, mobile, production build): Performance 90–94, Accessibility/Best practices/SEO 100, CLS 0, TBT under 100 ms. Simulated LCP is 3.1–3.7 s, above the 2.5 s target.
+- **Performance** (Lighthouse, mobile, measured on a server build before the move to static hosting): Performance 90–94, Accessibility/Best practices/SEO 100, CLS 0, TBT under 100 ms. Simulated LCP was 3.1–3.7 s, above the 2.5 s target.
+- **Static-host trade-offs:** images are served as the original .webp files (no resizing server), link prefetching is off, and a wrong URL shows the 404 page with a real 404 status.
 
 ## Adding your own jewellery models
 

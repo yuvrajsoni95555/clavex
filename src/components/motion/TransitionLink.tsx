@@ -16,5 +16,7 @@ export function TransitionLink({ href, onClick, ...rest }: ComponentProps<typeof
     navigateWithCurtain(href);
   };
 
-  return <Link href={href} onClick={handle} {...rest} />;
+  // prefetch off: on a static host Next 16 asks for prefetch files under names the export doesn't write (404s);
+  // the curtain covers the short fetch on click anyway
+  return <Link href={href} onClick={handle} prefetch={false} {...rest} />;
 }

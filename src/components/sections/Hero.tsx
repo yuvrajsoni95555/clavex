@@ -9,6 +9,7 @@ import { RevealText } from "@/components/motion/RevealText";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { holdPreloader, onSiteReady } from "@/lib/siteReady";
 import { deviceProfile, loadWhenEngaged } from "@/lib/device";
+import { asset } from "@/lib/asset";
 import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -120,7 +121,7 @@ export function Hero() {
           <div
             className={`absolute left-1/2 top-[65%] aspect-[4/5] h-[52svh] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-[1500ms] md:top-[47%] md:h-[72svh] ${ready ? "opacity-0" : "opacity-100"}`}
           >
-            <Image src="/products/aurelia-solitaire.webp" alt="" fill preload fetchPriority="high" sizes="(min-width: 768px) 60vh, 45vh" className="object-contain" />
+            <Image src={asset("/products/aurelia-solitaire.webp")} alt="" fill preload fetchPriority="high" sizes="(min-width: 768px) 60vh, 45vh" className="object-contain" />
           </div>
           <div className={`relative h-full w-full transition-opacity duration-[2000ms] ${ready ? "opacity-100" : "opacity-0"}`}>
             {scene && <HeroScene active={active} lite={scene.lite} reduced={scene.reduced} onReady={onSceneReady} />}

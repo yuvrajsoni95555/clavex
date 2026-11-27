@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return p ? { title: p.name, description: p.description, openGraph: { images: [productImage(p)] } } : {};
 }
 
-// params are read inside <Suspense> (Cache Components rule); known slugs still prerender in full.
+// params are read inside <Suspense>, so the page also works if Cache Components is switched back on (needs a server host).
 export default function ProductPage({ params }: Props) {
   return (
     <Suspense fallback={<main className="min-h-svh" />}>

@@ -1,4 +1,5 @@
 import type { MetalKey, StoneKey } from "@/config/materials";
+import { asset } from "@/lib/asset";
 
 /**
  * The catalogue. Placeholder pieces and prices: replace with your own.
@@ -115,4 +116,4 @@ export const formatPrice = (inr: number) =>
   new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(inr);
 
 export const productImage = (p: Product, view: "main" | "detail" = "main") =>
-  `/products/${p.slug}${view === "detail" ? "-detail" : ""}.webp`;
+  asset(`/products/${p.slug}${view === "detail" ? "-detail" : ""}.webp`);
